@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Actor
 
-class BaseActor: Actor() {
-    private val region = TextureRegion()
+open class BaseActor: Actor() {
+    val region = TextureRegion()
     private val boundary = Rectangle()
     var velocityX = 0f
     var velocityY = 0f
