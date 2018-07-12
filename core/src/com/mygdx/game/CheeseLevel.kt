@@ -104,6 +104,9 @@ class CheeseLevel(val game: CheeseGame) : Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             mousey.velocityX -= 100
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            game.screen = CheeseMenu(game)
+        }
 
         // update
         uiStage.act(dt)
