@@ -10,16 +10,13 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.mygdx.game.cheese.actors.AnimatedActor
 import com.mygdx.game.cheese.actors.BaseActor
 
-class CheeseLevel(val game: CheeseGame) : Screen {
+class CheeseLevel(game: CheeseGame) : BaseScreen(game) {
 
-    private lateinit var mainStage: Stage
-    private lateinit var uiStage: Stage
     private lateinit var floor: BaseActor
     private lateinit var mousey: AnimatedActor
     private lateinit var cheese: BaseActor
@@ -32,17 +29,7 @@ class CheeseLevel(val game: CheeseGame) : Screen {
     private val mapWidth = 800f
     private val mapHeight = 800f
 
-    // window dimensions
-    private val viewWidth = 640f
-    private val viewHeight = 480f
-
-    init {
-        create()
-    }
-
-    private fun create() {
-        mainStage = Stage()
-        uiStage = Stage()
+    override fun create() {
         floor = BaseActor().apply {
             setTexture(Texture("tiles-800-800.jpg"))
             setPosition(0f, 0f)
@@ -87,7 +74,7 @@ class CheeseLevel(val game: CheeseGame) : Screen {
         return Animation(0.1f, frames, Animation.PlayMode.LOOP_PINGPONG)
     }
 
-    override fun render(dt: Float) {
+    override fun update(dt: Float) {
         // process input
         mousey.velocityX = 0f
         mousey.velocityY = 0f
@@ -109,9 +96,6 @@ class CheeseLevel(val game: CheeseGame) : Screen {
         }
 
         // update
-        uiStage.act(dt)
-        mainStage.act(dt)
-
         mousey.x = MathUtils.clamp(mousey.x, 0f, mapWidth - mousey.width)
         mousey.y = MathUtils.clamp(mousey.y, 0f, mapHeight - mousey.height)
 
@@ -144,35 +128,22 @@ class CheeseLevel(val game: CheeseGame) : Screen {
             timeLabel.setText( "time: ${timeElapsed.toInt()}")
         }
 
-        // draw graphics
-        Gdx.gl.glClearColor(.8f, .8f, 1f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
         // camera adjustment
         val cam = mainStage.camera
         cam.position.set(mousey.x + mousey.originX, mousey.y + mousey.originY, 0f)
         cam.position.x = MathUtils.clamp(cam.position.x, viewWidth / 2, mapWidth - viewWidth / 2)
         cam.position.y = MathUtils.clamp(cam.position.y, viewHeight / 2, mapHeight - viewHeight / 2)
-
-        mainStage.draw()
-        uiStage.draw()
     }
 
-    override fun hide() {
-    }
+    override fun keyDown(keycode: Int): Boolean {
+        if (keycode == Input.Keys.M) {
+            game.screen = CheeseMenu(game)
+        }
 
-    override fun show() {
-    }
+        if (keycode == Input.Keys.P) {
+            togglePaused()
+        }
 
-    override fun pause() {
-    }
-
-    override fun resume() {
-    }
-
-    override fun resize(width: Int, height: Int) {
-    }
-
-    override fun dispose() {
+        return false
     }
 }

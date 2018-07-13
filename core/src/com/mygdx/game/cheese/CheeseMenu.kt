@@ -1,30 +1,19 @@
 package com.mygdx.game.cheese
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.mygdx.game.cheese.actors.BaseActor
 
-class CheeseMenu(val game: CheeseGame) : Screen {
-
-    private lateinit var uiStage: Stage
+class CheeseMenu(game: CheeseGame) : BaseScreen(game) {
     private lateinit var floor: BaseActor
+
     private lateinit var titleText: BaseActor
     private lateinit var instructions: Label
-
-    init {
-        create()
-    }
-
-    private fun create() {
-        uiStage = Stage()
+    override fun create() {
         floor = BaseActor().apply {
             setTexture(Texture("tiles-menu.jpg"))
             setPosition(0f, 0f)
@@ -52,38 +41,15 @@ class CheeseMenu(val game: CheeseGame) : Screen {
         uiStage.addActor(instructions)
     }
 
-    override fun render(dt: Float) {
-        // process input
+    override fun update(dt: Float) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+    }
+
+    override fun keyDown(keycode: Int): Boolean {
+        if (keycode == Input.Keys.S) {
             game.screen = CheeseLevel(game)
         }
 
-        // update
-        uiStage.act(dt)
-
-        // draw graphics
-        Gdx.gl.glClearColor(.8f, .8f, 1f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
-        uiStage.draw()
-    }
-
-    override fun hide() {
-    }
-
-    override fun show() {
-    }
-
-    override fun pause() {
-    }
-
-    override fun resume() {
-    }
-
-    override fun resize(width: Int, height: Int) {
-    }
-
-    override fun dispose() {
+        return false
     }
 }
