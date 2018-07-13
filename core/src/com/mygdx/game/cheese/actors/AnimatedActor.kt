@@ -1,4 +1,4 @@
-package com.mygdx.game.actors
+package com.mygdx.game.cheese.actors
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch

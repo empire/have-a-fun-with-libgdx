@@ -1,4 +1,4 @@
-package com.mygdx.game
+package com.mygdx.game.cheese
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.mygdx.game.actors.BaseActor
+import com.mygdx.game.cheese.actors.BaseActor
 
 class CheesePlease3: Game() {
 

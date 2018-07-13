@@ -1,4 +1,4 @@
-package com.mygdx.game
+package com.mygdx.game.cheese
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.mygdx.game.actors.BaseActor
+import com.mygdx.game.cheese.actors.BaseActor
 
 class CheeseMenu(val game: CheeseGame) : Screen {
 

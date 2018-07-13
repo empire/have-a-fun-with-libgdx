@@ -1,4 +1,4 @@
-package com.mygdx.game
+package com.mygdx.game.cheese
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
@@ -7,29 +7,23 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.mygdx.game.actors.AnimatedActor
-import com.mygdx.game.actors.BaseActor
+import com.mygdx.game.cheese.actors.AnimatedActor
+import com.mygdx.game.cheese.actors.BaseActor
 
-class CheesePlease5: Game() {
+class CheesePlease4: Game() {
 
     private lateinit var mainStage: Stage
-    private lateinit var uiStage: Stage
     private lateinit var floor: BaseActor
     private lateinit var mousey: AnimatedActor
     private lateinit var cheese: BaseActor
     private lateinit var winText: BaseActor
-    private lateinit var timeLabel: Label
     private var win = false
-    private var timeElapsed = 0f
 
     override fun create() {
         mainStage = Stage()
-        uiStage = Stage()
         floor = BaseActor().apply {
             setTexture(Texture("tiles.jpg"))
             setPosition(0f, 0f)
@@ -50,18 +44,11 @@ class CheesePlease5: Game() {
         }
         mousey.setOrigin(mousey.width / 2, mousey.height / 2)
 
-        val font = BitmapFont()
-        val labelStyle = Label.LabelStyle(font, Color.NAVY)
-        timeLabel = Label("time: 0", labelStyle)
-        timeLabel.setFontScale(2f)
-        timeLabel.setPosition(500f, 440f)
-        uiStage.addActor(timeLabel)
-
         winText = BaseActor().apply {
             setTexture(Texture("you-win.png"))
             setPosition(170f, 50f)
             isVisible = false
-            uiStage.addActor(this)
+            mainStage.addActor(this)
         }
     }
 
@@ -93,9 +80,7 @@ class CheesePlease5: Game() {
         }
 
         // update
-        val dt = Gdx.graphics.deltaTime
-        uiStage.act(dt)
-        mainStage.act(dt)
+        mainStage.act(Gdx.graphics.deltaTime)
         if (!win && cheese.getBoundingRectangle().contains(mousey.getBoundingRectangle())) {
             win = true
             val spinShrinkFadeOut = Actions.parallel(
@@ -120,15 +105,9 @@ class CheesePlease5: Game() {
             winText.addAction(fadeInColorCycleForever)
         }
 
-        if (!win) {
-            timeElapsed += dt
-            timeLabel.setText( "time: ${timeElapsed.toInt()}")
-        }
-
         // draw graphics
         Gdx.gl.glClearColor(.8f, .8f, 1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         mainStage.draw()
-        uiStage.draw()
     }
 }
