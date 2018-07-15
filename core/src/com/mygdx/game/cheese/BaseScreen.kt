@@ -1,15 +1,12 @@
 package com.mygdx.game.cheese
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.InputProcessor
-import com.badlogic.gdx.Screen
+import com.badlogic.gdx.*
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 
 @Suppress("LeakingThis")
-abstract class BaseScreen(val game: CheeseGame): Screen, InputProcessor {
+abstract class BaseScreen(val game: Game): Screen, InputProcessor {
     // window dimensions
     protected val viewWidth = 640f
     protected val viewHeight = 480f
@@ -36,7 +33,7 @@ abstract class BaseScreen(val game: CheeseGame): Screen, InputProcessor {
         uiStage.act(dt)
 
         // update graphics
-        Gdx.gl.glClearColor(.8f, .8f, 1f, 1f)
+        Gdx.gl.glClearColor(.3f, .2f, .1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         if (!paused) {

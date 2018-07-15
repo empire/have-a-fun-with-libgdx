@@ -92,7 +92,7 @@ class CheeseLevel(game: CheeseGame) : BaseScreen(game) {
             mousey.velocityX -= 100
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            game.screen = CheeseMenu(game)
+            game.screen = CheeseMenu(game as CheeseGame)
         }
 
         // update
@@ -137,7 +137,7 @@ class CheeseLevel(game: CheeseGame) : BaseScreen(game) {
 
     override fun keyDown(keycode: Int): Boolean {
         if (keycode == Input.Keys.M) {
-            game.screen = CheeseMenu(game)
+            game.screen = CheeseMenu(game as CheeseGame)
         }
 
         if (keycode == Input.Keys.P) {

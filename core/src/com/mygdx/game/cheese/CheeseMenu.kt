@@ -47,7 +47,7 @@ class CheeseMenu(game: CheeseGame) : BaseScreen(game) {
 
     override fun keyDown(keycode: Int): Boolean {
         if (keycode == Input.Keys.S) {
-            game.screen = CheeseLevel(game)
+            game.screen = CheeseLevel(game as CheeseGame)
         }
 
         return false
