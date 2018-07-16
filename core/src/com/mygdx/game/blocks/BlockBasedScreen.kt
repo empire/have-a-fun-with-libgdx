@@ -1,16 +1,17 @@
 package com.mygdx.game.blocks
 
+import com.badlogic.gdx.graphics.Color
 import com.mygdx.game.cheese.BaseScreen
 
 class BlockBasedScreen(game: BlockBasedGame): BaseScreen(game) {
 
 
     override fun create() {
-        mainStage.addActor(BaseBlockActor().apply {
+        mainStage.addActor(SetExpressionBlockActor().apply {
             setPosition(100f, 300f)
         })
 
-        mainStage.addActor(BaseBlockActor().apply {
+        mainStage.addActor(SetExpressionBlockActor().apply {
             setPosition(200f, 100f)
         })
 //        actor.addAction(Actions.forever(
