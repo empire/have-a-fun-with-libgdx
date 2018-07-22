@@ -3,67 +3,49 @@ package com.mygdx.game.blocks
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.mygdx.game.cheese.actors.BaseActor
 
 class SetExpressionBlockActor: BaseActor() {
-    private val pixmap: Pixmap = Pixmap(100, 100, Pixmap.Format.RGBA8888)
-    private val leftMargin = 5
-    private val width = 100
-    private val height = 40
-    private val triangleSide = 5
-    private val cornerRadius = 5
+
+    val fillImage = Texture(Pixmap(1, 1, Pixmap.Format.RGB888).apply {
+        setColor(Color(0xa55b80))
+
+        fillRectangle(0, 0, 1, 1)
+    }).apply {
+        setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge)
+    }
+
+    private val fillRegion = TextureRegion(fillImage)
 
     init {
-        val color = Color.YELLOW
-
-        pixmap.setColor(color)
-
-        var relativeX = 0
-        relativeX = drawLeftSide(relativeX)
-        relativeX = drawMiddleSide(relativeX)
-
-        setTexture(Texture(pixmap))
+        setTexture(Texture("set-expression.png"))
     }
 
-    private fun drawLeftSide(relativeX: Int): Int {
-        pixmap.fillCircle(cornerRadius, cornerRadius, cornerRadius)
-        pixmap.fillCircle(cornerRadius, height - cornerRadius - 1, cornerRadius)
+    override fun draw(batch: Batch, parentAlpha: Float) {
+        val topHeight = 15
+        val leftWidth = 15
+        val bottomHeight = region.texture.height - topHeight
 
-        //        pixmap.fillRectangle(cornerRadius, 0, width - cornerRadius, height)
-        pixmap.fillRectangle(0, cornerRadius, cornerRadius + 1, height - cornerRadius * 2)
-        pixmap.fillRectangle(cornerRadius + 1, 0, cornerRadius + leftMargin, height)
+        batch.draw(region.texture,
+                x, y + region.texture.height - topHeight,
+                0, 0,
+                region.texture.width - leftWidth, topHeight)
 
-        return relativeX + cornerRadius * 2 + leftMargin
+
+        batch.draw(fillRegion,
+                x + region.texture.width - leftWidth, y + topHeight,
+                region.texture.width - leftWidth.toFloat(), region.texture.height.toFloat() - topHeight)
+
+//        batch.draw(fillRegion,
+//                x, y + bottomHeight - (height - region.texture.height),
+//                width, height - region.texture.height)
+//
+        batch.draw(region.texture,
+                x, y - (height - region.texture.height),
+                0, region.texture.height - bottomHeight,
+                width.toInt(), bottomHeight)
     }
 
-    private fun drawMiddleSide(relativeX: Int): Int {
-        var margin = relativeX - (triangleSide / 2 + 2)
-        val triangleMargin = (triangleSide * .65).toInt()
-        val secondTriangleX = triangleMargin + 2 * triangleSide + 1
-
-        // Top part
-        pixmap.fillTriangle(margin, triangleSide, margin + triangleSide, 0, margin + 2 * triangleSide, triangleSide)
-        pixmap.fillTriangle(secondTriangleX + margin, triangleSide, secondTriangleX + margin + triangleSide, 0, secondTriangleX + margin + 2 * triangleSide, triangleSide)
-        pixmap.fillRectangle(margin + 2 * triangleSide + 1, triangleSide, triangleMargin, 1)
-
-        // Right margin
-        pixmap.fillRectangle(secondTriangleX + 2 * triangleMargin + margin, 0, cornerRadius + leftMargin, height)
-
-        // Bottom part
-        margin += triangleSide
-        pixmap.fillTriangle(
-                margin, height - 1,
-                margin + triangleSide, height + triangleSide - 1,
-                margin + 2 * triangleSide, height - 1)
-        pixmap.fillTriangle(
-                margin + triangleMargin + 1, height - 1,
-                margin + triangleSide + triangleMargin + 1, height + triangleSide - 1,
-                margin + 2 * triangleSide + triangleMargin + 1, height - 1)
-        pixmap.fillRectangle(margin + triangleSide + 1, height - 1, triangleMargin, triangleSide + 1)
-
-        // Fill gap
-        pixmap.fillRectangle(margin, triangleSide + 1, triangleMargin + 2 * (triangleSide + 1), height - triangleSide - 2)
-
-        return 0
-    }
 }

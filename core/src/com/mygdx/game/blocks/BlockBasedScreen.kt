@@ -1,6 +1,5 @@
 package com.mygdx.game.blocks
 
-import com.badlogic.gdx.graphics.Color
 import com.mygdx.game.cheese.BaseScreen
 
 class BlockBasedScreen(game: BlockBasedGame): BaseScreen(game) {
@@ -8,20 +7,14 @@ class BlockBasedScreen(game: BlockBasedGame): BaseScreen(game) {
 
     override fun create() {
         mainStage.addActor(SetExpressionBlockActor().apply {
-            setPosition(100f, 300f)
+            setPosition(200f, 320f)
         })
 
         mainStage.addActor(SetExpressionBlockActor().apply {
-            setPosition(200f, 100f)
+            setPosition(100f, 300f)
+            width = 200f
+            height = region.texture.height.toFloat() + 40
         })
-//        actor.addAction(Actions.forever(
-//                Actions.sequence(
-//                        Actions.scaleTo(1f, 1f, 1f),
-//                        Actions.scaleTo(.3f, .3f, 1f)
-//                )
-//        ))
-
-
     }
 
     override fun update(dt: Float) {
